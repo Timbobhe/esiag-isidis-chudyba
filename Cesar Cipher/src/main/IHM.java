@@ -6,12 +6,16 @@ import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EtchedBorder;
 
 import fr.esiag.security.cesar.Cesar;
+import fr.esiag.security.cesar.cryptanalyseCesar;
 import fr.esiag.util.Alphabet;
 import fr.esiag.util.Frequence;
 
@@ -42,6 +46,7 @@ public class IHM extends JFrame{
 	JLabel cleLabel = new JLabel("cle pour crypter");
 	JLabel cleDecryptLabel = new JLabel("cle pour decrypter");
 	JLabel cleProbableLabel = new JLabel("cle probable");
+	JLabel probabilite = new JLabel("Probabilitee: __%");
 	
 	JPanel panelDecrypt = new JPanel();
 	JPanel panelCrypt = new JPanel();
@@ -81,6 +86,7 @@ public class IHM extends JFrame{
 		panelInProbable.add(buttonProbable);
 		panelInProbable.add(cleProbableLabel);
 		panelInProbable.add(cleprobable);
+		panelInProbable.add(probabilite);
 		
 		panelProbable.add(textprobableResult);
 		
@@ -88,6 +94,10 @@ public class IHM extends JFrame{
 		this.add(panelCrypt);
 		this.add(panelDecrypt);
 		this.add(panelProbable);
+		
+		panelCrypt.setBorder(BorderFactory.createTitledBorder("Cryptage"));
+		panelDecrypt.setBorder(BorderFactory.createTitledBorder("Decryptage"));
+		panelProbable.setBorder(BorderFactory.createTitledBorder("Cryptanalyse"));
 		
 		buttonToCrypt.addActionListener(new ActionListener() {
 			
@@ -112,20 +122,28 @@ public class IHM extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				Frequence freq = new Frequence(textprobable.getText());
-				Character cMax = freq.getMax();
-				Integer cle = Alphabet.getPosition(cMax) - 4 % 36;
+				String input = textprobable.getText();
 				
-				cleprobable.setText(cle+"");
-				textprobableResult.setText(Cesar.decrypt(textprobable.getText(), Integer.parseInt(cleprobable.getText())));
+				String outputFrequence = cryptanalyseCesar.cryptanalyseFrequence(input);
+				Integer cleFrequence = cryptanalyseCesar.getKeyFrequence();
+				String outputDictionnaire = cryptanalyseCesar.cryptanalyseDictionnaire(input);
+				Integer cleDictionnaire = cryptanalyseCesar.getKeyDictionnaire();
+				if (cleDictionnaire== 0)
+					probabilite.setText("Probabilitee: 0%");
+				else if (cleFrequence== cleDictionnaire)
+					probabilite.setText("Probabilitee: 100%");
+				else 
+					probabilite.setText("Probabilitee: 50%");
+				cleprobable.setText(cleDictionnaire+"");
+				textprobableResult.setText(outputDictionnaire);
 			}
 		});
 		
 	}
 	public static void main(String[] args) {
 		IHM ihm = new IHM();
-		 ihm.pack();
-	     ihm.setVisible(true);
+		ihm.pack();
+	    ihm.setVisible(true);
 	}
 
 }
