@@ -35,9 +35,13 @@ public class IHM extends JFrame{
 	TextField cleprobable = new TextField(2);
 
 	
-	JButton buttonToCrypt = new JButton("Cypher");
-	JButton buttonDecrypt = new JButton("Decypher");
-	JButton buttonProbable = new JButton("Find");
+	JButton buttonToCrypt = new JButton("crypter");
+	JButton buttonDecrypt = new JButton("decrypter");
+	JButton buttonProbable = new JButton("cryptanalyse");
+	
+	JLabel cleLabel = new JLabel("cle pour crypter");
+	JLabel cleDecryptLabel = new JLabel("cle pour decrypter");
+	JLabel cleProbableLabel = new JLabel("cle probable");
 	
 	JPanel panelDecrypt = new JPanel();
 	JPanel panelCrypt = new JPanel();
@@ -58,6 +62,7 @@ public class IHM extends JFrame{
 		panelCrypt.setLayout(new GridLayout(1,4));
 		panelCrypt.add(textToCrypt);
 		panelCrypt.add(panelIncrypt);
+		panelIncrypt.add(cleLabel);
 		panelIncrypt.add(cle);
 		panelIncrypt.add(buttonToCrypt);
 		panelCrypt.add(textToCryptResult);
@@ -65,6 +70,7 @@ public class IHM extends JFrame{
 		panelDecrypt.setLayout(new GridLayout(1,4));
 		panelDecrypt.add(textDecrypt);
 		panelDecrypt.add(panelInDecrypt);
+		panelInDecrypt.add(cleDecryptLabel);
 		panelInDecrypt.add(cleDecrypt);
 		panelInDecrypt.add(buttonDecrypt);
 		panelDecrypt.add(textDecryptResult);
@@ -72,8 +78,10 @@ public class IHM extends JFrame{
 		panelProbable.setLayout(new GridLayout(1,4));
 		panelProbable.add(textprobable);
 		panelProbable.add(panelInProbable);
-		panelInProbable.add(cleprobable);
 		panelInProbable.add(buttonProbable);
+		panelInProbable.add(cleProbableLabel);
+		panelInProbable.add(cleprobable);
+		
 		panelProbable.add(textprobableResult);
 		
 		this.setLayout(new GridLayout(3,1));
