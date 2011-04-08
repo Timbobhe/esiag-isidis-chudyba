@@ -134,7 +134,7 @@ public class cryptanalyseCesar {
 			return Cesar.decrypt(input, compteur);
 		} else {
 			keyDictionnaire=0;
-			System.out.println("Cle non trouv�e");
+			System.out.println("Cle non trouve");
 		}
 
 		
